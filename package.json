@@ -1,0 +1,24 @@
+{
+	"name": "uberbot",
+	"version": "1.0.0",
+	"description": "A bot made by moby for production.",
+	"main": "index.js",
+	"scripts": {
+		"dev": "nodemon -r dotenv/config index.js",
+		"start": "node -r dotenv/config index.js"
+	},
+	"keywords": [
+		"bot",
+		"discord"
+	],
+	"liscense": "GPLv3",
+	"author": "moby (kieran keith)",
+	"dependencies": {
+		"discord.js": "^12.5.3",
+		"discord.js-commando": "^0.12.3",
+		"dotenv": "^10.0.0"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.12"
+	}
+}
