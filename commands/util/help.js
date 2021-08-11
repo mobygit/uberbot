@@ -65,6 +65,10 @@ module.exports = class HelpCommand extends Command {
 		const groups = [...new Set(commands.map(command => command.group))];
 		const showAll = !args.command || args.command && args.command.toLowerCase() === 'all';
 
+		if(commands.length === 1) {
+			return await msg.direct(generateHelp(commands[0], prefix));
+		}
+
 		if(showAll || commands.length <= 15 && commands.length > 1) {
 			const embed = new MessageEmbed()
 				.setColor('#0099ff')
@@ -94,10 +98,6 @@ module.exports = class HelpCommand extends Command {
 			return await msg.direct({ embed });
 		} else if(commands.length > 15) {
 			return await msg.reply('Be more specific!  Multiple commands with that name were found.');
-		} else if(commands.length === 1) {
-			if(this.client.isOwner(msg.author)) {
-				return await msg.direct(generateHelp(commands[0], prefix));
-			}
 		} else {
 			return await msg.reply(`Can't find command by the of ${args.command}! Use ${msg.usage(
 					null, msg.channel.type === 'dm' ? null : undefined, msg.channel.type === 'dm' ? null : undefined
