@@ -53,4 +53,4 @@ describe('Webserver', function() {
 	});
 });
 
-client.destroy()
+client.destroy();

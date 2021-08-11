@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "nodemon -r dotenv/config index.js",
 		"start": "node index.js",
-		"test": "mocha"
+		"test": "mocha --exit"
 	},
 	"repository": "https://github.com/mobyboyy/uberbot",
 	"license": "AGPL-3.0-or-later",
