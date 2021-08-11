@@ -6,16 +6,17 @@ const sqlite = require('sqlite');
 const sqlite3 = require('sqlite3');
 
 const client = new Commando.Client({
-	owner: '158327940311023616',
-	prefix: '!'
+	owner: process.env.OWNER_ID,
+	prefix: process.env.PREFIX
 });
+
 
 client.registry
 	.registerGroups([
-        	['fun', 'Fun commands'],
-		['util', 'Utility commands'],
-        	['commands', 'Uncategorized commands'],
-		['mod', 'Moderator commands']
+        	['fun', 'Fun Commands'],
+		['util', 'Utility Commands'],
+        	['commands', 'Uncategorized Commands'],
+		['mod', 'Moderation-related Commands']
 	])
 	.registerDefaultTypes()
     	.registerCommandsIn(path.join(__dirname, 'commands'))
@@ -24,9 +25,9 @@ client.registry
 client
 	.on('ready', () => {
 		console.log('ready!');
-		bot.user.setStatus('available');
+		client.user.setStatus('available');
 		client.user.setActivity({
-			name: `${client.guilds.size} servers | do !help`,
+			name: `${client.guilds.cache.size} servers | do !help`,
 			type: "STREAMING",
 			url: "https://uberbot.xyz",
 		});

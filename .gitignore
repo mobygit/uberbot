@@ -120,3 +120,4 @@ dist
 # other files
 package-lock.json
 *.db
+*.env
