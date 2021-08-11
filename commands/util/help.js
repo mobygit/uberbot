@@ -55,7 +55,6 @@ module.exports = class HelpCommand extends Command {
 	async run(msg, args) {
 		const commands = this.client.registry.findCommands(args.command, false, msg)
 			.filter(command => !command.hidden)
-			.filter(command => command.ownerOnly && this.client.isOwner(msg.author))
 
 
 		const invite = await this.client.generateInvite({
