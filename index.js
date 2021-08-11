@@ -19,8 +19,8 @@ client.registry
 		['mod', 'Moderation-related Commands']
 	])
 	.registerDefaultTypes()
-    	.registerCommandsIn(path.join(__dirname, 'commands'))
-	//.registerTypesIn(path.join(__dirname, 'types'));
+    	.registerCommandsIn(path.join(__dirname, 'commands'));
+	// .registerTypesIn(path.join(__dirname, 'types'));
 
 client
 	.on('ready', () => {
@@ -28,11 +28,11 @@ client
 		client.user.setStatus('available');
 		client.user.setActivity({
 			name: `${client.guilds.cache.size} servers | do !help`,
-			type: "STREAMING",
-			url: "https://uberbot.xyz",
+			type: 'STREAMING',
+			url: 'https://uberbot.xyz'
 		});
 	});
-	
+
 client.setProvider(
     sqlite.open({ filename: 'database.db', driver: sqlite3.Database }).then(db => new Commando.SQLiteProvider(db))
 ).catch(console.error);
