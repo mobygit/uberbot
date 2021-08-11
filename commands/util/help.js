@@ -9,7 +9,7 @@ function generateHelp(client,command, prefix) {
 		.setColor('#0099ff')
 		.setAuthor('uberbot help', client.user.avatarURL(), 'https://uberbot.xyz/')
 		.setTitle(`${prefix}${command.name}${command.nsfw ? ' (NSFW)' : ''}${command.guildOnly ? ' (Only usuable in servers)' : ''}`)
-		.setDescription(commqnd.description)
+		.setDescription(command.description)
 		.addField('Al iases', command.aliases
 			.map(alias => `${prefix}${alias}`)
 			.join(', ')
