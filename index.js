@@ -20,7 +20,8 @@ client.registry
 	])
 	.registerDefaultTypes()
     	.registerCommandsIn(path.join(__dirname, 'commands'))
-	.registerTypesIn(path.join(__dirname, 'types'));
+)
+	//.registerTypesIn(path.join(__dirname, 'types'));
 
 client
 	.on('ready', () => {
