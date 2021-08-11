@@ -5,26 +5,27 @@
 	"main": "index.js",
 	"scripts": {
 		"dev": "nodemon -r dotenv/config index.js",
-		"start": "node index.js"
+		"start": "node index.js",
+		"test": "npm run lint",
+		"lint": "eslint src",
+		"lint:fix": "eslint --fix src"
 	},
-	"keywords": [
-		"bot",
-		"discord"
-	],
+	"repository": "https://github.com/mobyboyy/uberbot",
+	"license": "GPLv3",
 	"engines": {
-    		"node": ">=10.0.0",
-    		"npm": ">=6.0.0"
-  	},
-	"liscense": "GPLv3",
+		"node": ">=10.0.0",
+		"npm": ">=6.0.0"
+	},
 	"author": "moby (kieran keith)",
 	"dependencies": {
 		"discord.js": "^12.5.3",
 		"discord.js-commando": "^0.12.3",
-		"dotenv": "^10.0.0",
+		"eslint": "^7.32.0",
 		"sqlite": "^4.0.23",
 		"sqlite3": "^5.0.2"
 	},
 	"devDependencies": {
-		"nodemon": "^2.0.12"
+		"nodemon": "^2.0.12",
+		"dotenv": "^10.0.0"
 	}
 }
