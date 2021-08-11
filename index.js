@@ -7,7 +7,7 @@ const sqlite3 = require('sqlite3');
 
 const client = new Commando.Client({
 	owner: process.env.OWNER_ID,
-	prefix: process.env.PREFIX
+	prefix: process.env.PREFIX | '!'
 });
 
 
