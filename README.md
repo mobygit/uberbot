@@ -1,3 +1,5 @@
+[![Build Status](https://app.travis-ci.com/mobyboyy/uberbot.svg?token=XoASytEzLzW6t3DewjEh&branch=master)](https://app.travis-ci.com/mobyboyy/uberbot)
+
 # uberbot
 a simple bot made by moby
 
