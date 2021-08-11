@@ -1,4 +1,7 @@
-var assert = require('assert');         describe('Discord', function() {                it('should be able to successfully authenticate', function() {
-                var discord = require('discord.js');
-                new Discord.Client()                            .login(process.env.TOKEN);                                      });                             });
-~
+describe('Discord', function() {
+	it('should be able to successfully authenticate', function() {
+		var Discord = require('discord.js');
+		let client = new Discord.Client();
+		client.login('MzU0MzU4MDA3Mzc2NjQyMDQ4.Wa2znA.lIQZrJSSBMs655GHTTKen25jsmM');
+	});
+});
