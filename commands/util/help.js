@@ -65,7 +65,7 @@ module.exports = class HelpCommand extends Command {
 		const groups = [...new Set(commands.map(command => command.group))];
 		const showAll = !args.command || args.command && args.command.toLowerCase() === 'all';
 
-		if(showAll || commands.length <= 15 && commands.length > 0) {
+		if(showAll || commands.length <= 15 && commands.length > 1) {
 			const embed = new MessageEmbed()
 				.setColor('#0099ff')
 				.setDescription(`Run ${prefix}help <command> for more details on a command`)
