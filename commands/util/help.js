@@ -9,11 +9,14 @@ function generateHelp(client,command, prefix) {
 		.setColor('#0099ff')
 		.setAuthor('uberbot help', client.user.avatarURL(), 'https://uberbot.xyz/')
 		.setTitle(`${prefix}${command.name}${command.nsfw ? ' (NSFW)' : ''}${command.guildOnly ? ' (Only usuable in servers)' : ''}`)
-		.setDescription(command.description)
-		.addField('Al iases', command.aliases
+		.setDescription(command.description);
+	
+	if (command.aliases) help
+		.addField('Aliases', command.aliases
 			.map(alias => `${prefix}${alias}`)
 			.join(', ')
-		)
+		);
+
 		.addField('Details', command.details)
 		.addField('Examples', `\`\`\`${command.examples.join('\n')}\`\`\``)
 		.setTimestamp()
