@@ -67,7 +67,7 @@ module.exports = class HelpCommand extends Command {
 
 		let prefix = this.client.commandPrefix || process.env.PREFIX ||
 '!';
-		const groups = [...new Set(commands.map((command) => command.options.group))];
+		const groups = [...new Set(commands.map((command) => command.group))];
 		const showAll = !args.command || args.command && args.command.toLowerCase() === 'all';
         
 		if (showAll || commands.length <= 15 && commands.length > 0) {	
