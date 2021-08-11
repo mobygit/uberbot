@@ -67,7 +67,7 @@ module.exports = class HelpCommand extends Command {
 
 		msg.reply(commands.length);
 		if(commands.length === 1) {
-			return msg.direct(generateHelp(commands[0], prefix));
+			return msg.direct({ embed: generateHelp(commands[0], prefix) });
 		}
 
 		if(showAll || commands.length <= 15 && commands.length > 1) {
@@ -94,7 +94,7 @@ module.exports = class HelpCommand extends Command {
 
 		    		])
 			);
-:wq
+
 			if(msg.channel.type !== 'dm') msg.reply('Sent you a DM with information.');
 			return await msg.direct({ embed });
 		} else if(commands.length > 15) {

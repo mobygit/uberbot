@@ -6,8 +6,8 @@ const sqlite = require('sqlite');
 const sqlite3 = require('sqlite3');
 
 const client = new Commando.Client({
-	owner: process.env.OWNER_ID | '158327940311023616',
-	prefix: process.env.PREFIX | '!'
+	owner: process.env.OWNER_ID || '158327940311023616',
+	prefix: process.env.PREFIX || '!'
 });
 
 

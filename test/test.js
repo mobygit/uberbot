@@ -13,10 +13,6 @@ const client = new Discord.Client({
 	prefix: '!'
 });
 
-client.on('ready', () => {
-	bot.user.setStatus('idle', 'Hang tight! We\'re performing a few tests before we go live.')
-});
-
 describe('Discord', function () {
 	it('should be able to register types', function () {
 		client.registry
@@ -25,9 +21,6 @@ describe('Discord', function () {
 	it('should be able to register default types', function () {
 		client.registry
 			.registerDefaultTypes()
-	});
-	it('should be able to register commands', function () {
-		client.registry.registerCommandsIn(path.join(__dirname, '../commands'))
 	});
 	it('should be able to load the database', function () {
 		client.setProvider(                         sqlite.open({ filename: 'database.db', driver: sqlite3.Database }).then(db => new Discord.SQLiteProvider(db)).catch(console.error));
