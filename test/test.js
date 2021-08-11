@@ -26,7 +26,7 @@ describe('Discord', function () {
 		client.setProvider(                         sqlite.open({ filename: 'database.db', driver: sqlite3.Database }).then(db => new Discord.SQLiteProvider(db)).catch(console.error));
 	});
 	it('should be able to successfully authenticate', function () {
-		client.login(process.env.TOKEN || 'MzU0MzU4MDA3Mzc2NjQyMDQ4.Wa2znA.lIQZrJSSBMs655GHTTKen25jsmM');
+		client.login(process.env.TOKEN);
 	});
 });
 
