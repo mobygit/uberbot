@@ -5,6 +5,9 @@ const path = require('path');
 const sqlite = require('sqlite');
 const sqlite3 = require('sqlite3');
 
+const Koa = require('koa');
+const app = new Koa();
+
 const client = new Commando.Client({
 	owner: process.env.OWNER_ID || '158327940311023616',
 	prefix: process.env.PREFIX || '!'
@@ -38,4 +41,5 @@ client.setProvider(
 ).catch(console.error);
 
 client.login(process.env.TOKEN);
+app.listen(process.env.PORT || 8080);
 
