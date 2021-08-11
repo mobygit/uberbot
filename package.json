@@ -11,6 +11,10 @@
 		"bot",
 		"discord"
 	],
+	"engines": {
+    		"node": ">=10.0.0",
+    		"npm": ">=6.0.0"
+  	},
 	"liscense": "GPLv3",
 	"author": "moby (kieran keith)",
 	"dependencies": {
