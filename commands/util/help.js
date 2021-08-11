@@ -65,7 +65,7 @@ module.exports = class HelpCommand extends Command {
 		const groups = [...new Set(commands.map(command => command.group))];
 		const showAll = !args.command || args.command && args.command.toLowerCase() === 'all';
 
-		if(commands.length === 1) {
+		if(commands.length == 1) {
 			return await msg.direct(generateHelp(commands[0], prefix));
 		}
 
