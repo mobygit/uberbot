@@ -14,7 +14,10 @@ const client = new Discord.Client({
 });
 
 client.on('ready', () => {
-	bot.user.setStatus('idle', 'Hang tight! We\'re performing a few tests before we go live.')
+	client.user.setPresence({
+		activities: [{ name: 'Hang on tight!  We\'re performing a few tests before we go live.' },]
+		status: 'idle'
+	});
 });
 
 describe('Discord', function () {
