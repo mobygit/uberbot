@@ -65,9 +65,8 @@ module.exports = class HelpCommand extends Command {
 		const groups = [...new Set(commands.map(command => command.group))];
 		const showAll = !args.command || args.command && args.command.toLowerCase() === 'all';
 
-		message.reply(commands.length);
 		if(commands.length === 1) {
-			return await msg.direct(generateHelp(commands[0], prefix));
+			return msg.direct(generateHelp(commands[0], prefix));
 		}
 
 		if(showAll || commands.length <= 15 && commands.length > 1) {
@@ -94,7 +93,7 @@ module.exports = class HelpCommand extends Command {
 
 		    		])
 			);
-
+:wq
 			if(msg.channel.type !== 'dm') msg.reply('Sent you a DM with information.');
 			return await msg.direct({ embed });
 		} else if(commands.length > 15) {
