@@ -52,3 +52,5 @@ describe('Webserver', function() {
 		app.listen(process.env.PORT || 8080);
 	});
 });
+
+client.destroy()
