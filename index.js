@@ -26,9 +26,6 @@ client.registry
 	// .registerTypesIn(path.join(__dirname, 'types'));
 
 client
-	.on('error', console.error)
-	.on('warn', console.warn)
-	.on('debug', console.log)
 	
 	.on('ready', () => {
 		console.log('ready!');
@@ -57,20 +54,7 @@ client
 			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
 		`);
 	})
-	.on('commandStatusChange', (guild, command, enabled) => {
-		console.log(oneLine`
-			Command ${command.groupID}:${command.memberName}
-			${enabled ? 'enabled' : 'disabled'}
-			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
-		`);
-	})
-	.on('groupStatusChange', (guild, group, enabled) => {
-		console.log(oneLine`
-			Group ${group.id}
-			${enabled ? 'enabled' : 'disabled'}
-			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
-		`);
-	});
+
 
 client.setProvider(
     sqlite.open({ filename: 'database.db', driver: sqlite3.Database }).then(db => new Commando.SQLiteProvider(db))
