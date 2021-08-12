@@ -6,7 +6,9 @@
 	"scripts": {
 		"dev": "nodemon -r dotenv/config index.js",
 		"start": "node index.js",
-		"test": "mocha --exit"
+		"test": "yarn run lint",
+		"lint": "eslint",
+		"lint:fix": "eslint --fix"
 	},
 	"repository": "https://github.com/mobyboyy/uberbot",
 	"license": "AGPL-3.0-or-later",
@@ -21,13 +23,15 @@
 		"koa": "^2.13.1",
 		"koa-route": "^3.2.0",
 		"koa-router": "^10.0.0",
-		"mocha": "^9.0.3",
 		"sqlite": "^4.0.23",
 		"sqlite3": "^5.0.2",
 		"urban": "^0.3.2"
 	},
 	"devDependencies": {
 		"dotenv": "^10.0.0",
-		"nodemon": "^2.0.12"
+		"eslint": "^7.32.0",
+		"mocha": "^9.0.3",
+		"nodemon": "^2.0.12",
+		"yarn": "^1.22.11"
 	}
 }
