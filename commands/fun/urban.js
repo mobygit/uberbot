@@ -30,9 +30,9 @@ module.exports = class Urban extends Command {
 
 		if (word) {
 			msg.channel.send('Searching... :mag_right:')
-				.then(msg => msg.delete({ timeout: 2500 }));
+				.then(msg => msg.delete({ timeout: 700 }));
 
-			await delay(2.5);
+			await delay(1);
 
 			let definition = await urbanDictionary(word);
 
