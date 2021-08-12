@@ -118,5 +118,4 @@ dist
 .pnp.*
 
 # other files
-package-lock.json
 *.db
