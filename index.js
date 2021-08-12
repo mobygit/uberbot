@@ -1,4 +1,4 @@
-const Commando = require('discord.js-commando');
+const commando = require('discord.js-commando');
 const Discord = require('discord.js');
 const path = require('path');
 
@@ -8,7 +8,7 @@ const sqlite3 = require('sqlite3');
 const Koa = require('koa');
 const app = new Koa();
 
-const client = new Commando.Client({
+const client = new commando.Client({
 	owner: process.env.OWNER_ID || '158327940311023616',
 	prefix: process.env.PREFIX || '!'
 });
