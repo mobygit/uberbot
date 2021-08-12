@@ -39,7 +39,7 @@ client
 			url: 'https://uberbot.xyz'
 		});
 	})
-	on('disconnect', () => { console.warn('Disconnected!'); })
+	.on('disconnect', () => { console.warn('Disconnected!'); })
 	.on('reconnecting', () => { console.warn('Reconnecting...'); })
 	.on('commandError', (cmd, err) => {
 		if(err instanceof commando.FriendlyError) return;
