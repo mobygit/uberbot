@@ -6,7 +6,7 @@ const sqlite = require('sqlite');
 const sqlite3 = require('sqlite3');
 
 const Koa = require('koa');
-const _ = require('koa-router');
+const _ = require('koa-route');
 const app = new Koa();
 
 const client = new commando.Client({
@@ -58,12 +58,12 @@ client
 
 
 client.setProvider(
-    sqlite.open({ filename: 'database.db', driver: sqlite3.Database }).then(db => new Commando.SQLiteProvider(db))
+    sqlite.open({ filename: 'database.db', driver: sqlite3.Database }).then(db => new commando.SQLiteProvider(db))
 ).catch(console.error);
 
 app.use(_.get('/', async ctx => {
 	ctx.body = 'Bot is up!'
-});
+}));
 
 client.login(process.env.TOKEN);
 app.listen(process.env.PORT || 5000);

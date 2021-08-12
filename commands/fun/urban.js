@@ -15,7 +15,7 @@ module.exports = class Urban extends Command {
 			name: 'urban',
 			group: 'fun',
 			memberName: 'urban',
-			aliases: ['ud', 'urbandictionary']
+			aliases: ['ud', 'urbandictionary'],
 			description: 'Looks up a definition on urban dictionary',
 			examples: ['urban edward', 'ud john', 'ud eduardo picasso'],
 			args: [
@@ -39,18 +39,15 @@ module.exports = class Urban extends Command {
 
 			let definition = await searchDefinition(word);
 
-			console.log(definition)
+			console.log(definition);
 
-			msg.channel.send({
-				embed: new MessageEmbed()
-					.setAuthor('Urban Dictionary', 'https://urbandictionary.com/'
+			return msg.channel.send(new MessageEmbed()
+					.setAuthor('Urban Dictionary', 'https://urbandictionary.com/')
 					.setTitle(definition.word)
 					.addField('Defintion', `**${defintion.definition}**`)
-					.addField('Example', `*${definition.example}*`)
-
-			});
+					.addField('Example', `*${definition.example}*`));
 		} else {
-			return msg.reply('');
+			return msg.reply('Failed to find definition!');
 		}
 	}
 }
