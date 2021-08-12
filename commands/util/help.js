@@ -4,15 +4,14 @@ const commando = require('discord.js-commando');
 const { util, Command } = commando;
 const { disambigation } = util;
 
-function generateHelp(client,command, prefix) {
+function generateHelp(client, command, prefix) {
 	let help = new MessageEmbed()
 		.setColor('#0099ff')
 		.setAuthor('uberbot help', client.user.avatarURL(), 'https://uberbot.xyz/')
 		.setTitle(`${prefix}${command.name}${command.nsfw ? ' (NSFW)' : ''}${command.guildOnly ? ' (Only usuable in servers)' : ''}`)
 		.setDescription(command.description);
 	
-	if (command.aliases) help
-		.addField('Aliases', command.aliases
+	if (command.aliases) help.addField('Aliases', command.aliases
 			.map(alias => `${prefix}${alias}`)
 			.join(', ')
 		);
