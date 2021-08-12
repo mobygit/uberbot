@@ -44,7 +44,7 @@ module.exports = class Urban extends Command {
 			return msg.channel.send(new MessageEmbed()
 					.setAuthor('Urban Dictionary', 'https://urbandictionary.com/')
 					.setTitle(definition.word)
-					.addField('Defintion', `**${defintion.definition}**`)
+					.addField('Defintion', `**${definition.definition}**`)
 					.addField('Example', `*${definition.example}*`));
 		} else {
 			return msg.reply('Failed to find definition!');
