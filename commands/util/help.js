@@ -11,7 +11,7 @@ function generateHelp(client, command, prefix) {
 		.setTitle(`${prefix}${command.name}${command.nsfw ? ' (NSFW)' : ''}${command.guildOnly ? ' (Only usuable in servers)' : ''}`)
 		.setDescription(command.description);
 	
-	if (command.aliases) {
+	if (command.aliases && command.aliases.length > 0) {
 		help.addField('Aliases', command.aliases.join(', '))
 	}
 
