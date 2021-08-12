@@ -1,13 +1,8 @@
 const { stripIndents, oneLine } = require('common-tags');
+
 const { Command } = require('discord.js-commando');
 const { MessageEmbed } = require('discord.js');
-const urban = require('urban');
-
-function searchDefinition(word) {
-	return new Promise((resolve, reject) => {
-		urban(word).first(json => resolve(json));
-	});
-}
+const { urbanDictionary, removeBrackets, delay } = require('../../util');
 
 module.exports = class Urban extends Command {
 	constructor(client) {
@@ -37,15 +32,17 @@ module.exports = class Urban extends Command {
 			msg.channel.send('Searching... :mag_right:')
 				.then(msg => msg.delete({ timeout: 2500 }));
 
-			let definition = await searchDefinition(word);
+			await delay(2.5);
+
+			let definition = await urbanDictionary(word);
 
 			console.log(definition);
 
 			return msg.channel.send(new MessageEmbed()
 					.setAuthor('Urban Dictionary', 'https://urbandictionary.com/')
 					.setTitle(definition.word)
-					.addField('Defintion', `**${definition.definition}**`)
-					.addField('Example', `*${definition.example}*`));
+					.addField('Defintion', `**${removeBrackets(definition.definition)}**`)
+					.addField('Example', `*${removeBrackets(definition.example)}*`));
 		} else {
 			return msg.reply('Failed to find definition!');
 		}
