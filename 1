@@ -26,7 +26,7 @@ client.registry
 	])
 	.registerDefaultTypes()
     	.registerCommandsIn(path.join(__dirname, 'commands'));
-
+	// .registerTypesIn(path.join(__dirname, 'types'));
 
 client
 	
@@ -34,7 +34,7 @@ client
 		console.log('ready!');
 		client.user.setStatus('available');
 		client.user.setActivity({
-			name: `${client.guilds.cache.size} servers | do @${client.user.name} help`,
+			name: `${client.guilds.cache.size} servers | do !help`,
 			type: 'STREAMING',
 			url: 'https://uberbot.xyz'
 		});

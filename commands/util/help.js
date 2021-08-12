@@ -65,8 +65,7 @@ module.exports = class HelpCommand extends Command {
   			scopes: ['bot']
 		});
 
-		let prefix = this.client.commandPrefix || process.env.PREFIX ||
-'!';
+		let prefix = this.client.commandPrefix;
 		const groups = [...new Set(commands.map(command => command.group))];
 		const showAll = !args.command || args.command && args.command.toLowerCase() === 'all';
 		if(commands.length === 1) {
@@ -97,6 +96,8 @@ module.exports = class HelpCommand extends Command {
 
 		    		])
 			);
+
+			if(!prefix) embed.addField('Prefix not set up!', `There appears to be no prefix set, do <@${this.client.user.id}> prefix to set a prefix`)
 
 			if(msg.channel.type !== 'dm') msg.reply('Sent you a DM with information.');
 			return await msg.direct({ embed });
