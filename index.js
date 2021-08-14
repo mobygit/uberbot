@@ -34,7 +34,7 @@ client
 		console.log('ready!');
 		client.user.setStatus('available');
 		client.user.setActivity({
-			name: `${client.guilds.cache.size} servers | do @${client.username} help`,
+			name: `${client.guilds.cache.size} servers | do @${client.user.username} help`,
 			type: 'STREAMING',
 			url: 'https://uberbot.xyz'
 		});
