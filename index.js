@@ -13,7 +13,7 @@ const { oneLine } = require('common-tags');
 
 const client = new commando.Client({
 	owner: process.env.OWNER_ID || '158327940311023616',
-	prefix: undefined
+	prefix: process.env.PREFIX || '!'
 });
 
 
@@ -34,7 +34,7 @@ client
 		console.log('ready!');
 		client.user.setStatus('available');
 		client.user.setActivity({
-			name: `${client.guilds.cache.size} servers | do @${client.user.username} help`,
+			name: `${client.guilds.cache.size} servers | do ${process.env.prefix || '!'}help`,
 			type: 'STREAMING',
 			url: 'https://uberbot.xyz'
 		});
