@@ -22,7 +22,8 @@ client.registry
         	['fun', 'Fun Commands'],
 		['util', 'Utility Commands'],
         	['commands', 'Uncategorized Commands'],
-		['mod', 'Moderation-related Commands']
+		['mod', 'Moderation-related Commands'],
+		['notifications', 'Social Notifications']
 	])
 	.registerDefaultTypes()
     	.registerCommandsIn(path.join(__dirname, 'commands'));
@@ -66,6 +67,8 @@ client.setProvider(
 app.use(_.get('/', async ctx => {
 	ctx.body = 'Bot is up!'
 }));
+
+require('./notifier/twitch')(client);
 
 client.login(process.env.TOKEN);
 app.listen(process.env.PORT || 5000);

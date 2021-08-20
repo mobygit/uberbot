@@ -12,15 +12,37 @@ function urbanDictionary(str) {
 
 function delay(seconds) {
 	return new Promise((resolve, reject) => {
-	setTimeout(() => {
+		setTimeout(() => {
 			resolve();
 		}, seconds * 1000);
 	});
 }
 
+const { ApiClient } = require('twitch');
+
+const apiClient = ApiClient.withClientCredentials(process.env.CLIENT_ID, process.env.CLIENT_SECRET);
+
+function getUserByName(name) {
+	return apiClient.helix.users.getUserByName(name);
+}
+
+function getChannel(id) {
+	return new Promise((resolve, reject) => {
+		Promise.all([
+			apiClient.kraken.channels.getChannel(id),
+                    apiClient.kraken.streams.getStreamByChannel(id)
+		]).then(data => {
+			resolve({...data[0], ...data[1]});
+		});
+	});
+}
+
+
 
 module.exports = {
 	removeBrackets,
 	urbanDictionary,
-	delay
+	delay,
+	getUserByName,
+	getChannel
 }
