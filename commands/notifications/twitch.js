@@ -1,5 +1,5 @@
 const { Command } = require('discord.js-commando');
-const { getUserByName } = require('../../util');
+const { getUser } = require('../../util');
 
 const db = require('quick.db');
 
@@ -19,7 +19,7 @@ module.exports = class Twitch extends Command {
 				type: 'string',
 				prompt: 'What twitch channel would you like to track?',
 				validate: async val => {
-					let id = getUserByName(val);
+					let id = getUser(val);
 if (!id) return `Unable to find twitch channel ${val}`;
 				
 				return true;
@@ -35,21 +35,24 @@ if (!id) return `Unable to find twitch channel ${val}`;
 				type: 'role',
 				prompt: 'What role would you like to mention?',
 				default: ''
+			}, {
+				name: 'message',
+				key: 'message',
+				type: 'string',
+				prompt: 'what message would you like?',
+				default: ''
 			}]
 		});
 	}
 
 	async run(message, args) {
-		const twitchChannel = await getUserByName(args.twitch);
+		const twitchChannel = await getUser(args.twitch);
 		const textChannel = args.channel;
-		const role = args.role || message.guild.roles.everyone.id;
-		console.log(twitchChannel);
+		const role = args.role;
 
 		if (!db.get('twitch_channels')) db.set('twitch_channels', {});
 		if (!db.get(`twitch_channels.${twitchChannel.id}`)) db.set(`twitch_channels.${twitchChannel.id}`, {data: []});
-		db.push(`twitch_channels.${twitchChannel.id}.data`, {role: `<@&${role.id}>`, message: ``, channel: textChannel.id});
-
-		console.log(db.get('twitch_channels'));
+		db.push(`twitch_channels.${twitchChannel.id}.data`, {role: `<@&${role.id}>`, message: args.message, channel: textChannel.id});
 		message.reply('Successfully tracking twitch channel!');
 
 	}

@@ -13,7 +13,8 @@ const { oneLine } = require('common-tags');
 
 const client = new commando.Client({
 	owner: process.env.OWNER_ID || '158327940311023616',
-	prefix: process.env.PREFIX || '!'
+	prefix: process.env.PREFIX || '!',
+	mentionEveryone: true,
 });
 
 

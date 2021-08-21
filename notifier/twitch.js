@@ -5,7 +5,7 @@ const db = require('quick.db');
 
 if (!db.get('twitch_channel')) db.set('twitch_channel', {});
 
-const { getUserFromName, getChannel, getStreams, getUsersById } = require('../util');
+const { getUser, getStream, getStreams, getUsers } = require('../util');
 
 const SOCKET_COUNT = 10;
 const MAX_TOPICS = 50;
@@ -31,7 +31,7 @@ module.exports = function module(client) {
 		sub = JSON.parse(sub);
 
 		if (sub.type === 'PONG') {
-			socket.lastPong = moment().unix();
+			socket.last_pong = moment().unix();
 		};
 
 		if (sub.type !== 'MESSAGE') return;
@@ -42,7 +42,7 @@ module.exports = function module(client) {
 		let channel = db.get(`twitch_channel.${channelId}`);
     		let seconds = Math.round(+new Date() / 1000 - data.server_time);
 
-		if (topic.startsWith('video-playback-by-id')) 
+		if (topic.startsWith('video-playback-by-id')) {
 			if (message.type == 'stream-up') {
 				if (channel.live) {
 										channel.live = false;
@@ -69,11 +69,13 @@ db.set(`twitch_channel.${channelId}`, channel);
 	}
 
 	function postLiveNotifications(channel) {
-		channels.data.forEach(value => {                                                                                                                                                                client.channels.fetch(value.channel).then(textChannel => {                                                                      textChannel.send(`${value.role} ${value.message || `${channel.displayName} Just went live!  Go watch!`} https://www.twitch.tv/${channel.name}`);                                                });
+		channel.data.forEach(value => {                                                                                                                                                                client.channels.fetch(value.channel).then(textChannel => {
+			textChannel.send(`${value.role || '@everyone'} ${value.message || `${channel.displayName} Just went live!  Go watch!`} https://www.twitch.tv/${channel.name}`);                                                });
 		});
 	}
 
 	function bindSocketHandlers(socket) {
+		let channels = db.get('twitch_channels');
 		socket.socket.on('message', message => {
 			incomingPubSub(message, socket);
 		});
@@ -86,8 +88,9 @@ db.set(`twitch_channel.${channelId}`, channel);
 			addChannel(socket, 0);
 
 			x += socket.topics;
-			for (let [key, channel] of channels.entries()) {
-				if (x % MAX_TOPIC == 0) break;
+			socket.readyState = 1;
+			for (let [key, channel] of Object.entries(channels)) {
+				if (x % MAX_TOPICS == 0) break;
 				addChannel(socket, channel);
 				x++;
 			};
@@ -105,65 +108,74 @@ db.set(`twitch_channel.${channelId}`, channel);
 	}
 
 
-	function updateChannels() {
+	async function updateChannels() {
 		sockets.forEach(socket => {
-			if (socket.ws.readyState == 1) socket.socket.send(JSON.stringify({ type: 'PING' }));
+			if (socket.socket.readyState == 1) socket.socket.send(JSON.stringify({ type: 'PING' }));
 
-			if (moment().unix() - socket > 90) reconnectSocket(socket);
+			if (moment().unix() - socket.last_pong > 90) reconnectSocket(socket);
 		});
 
 
 		let trackedChannels = db.get(`twitch_channels`);
 		let checkChannels = Object.keys(trackedChannels);
 
-		let requestChannels = []; let requestUsers = [];
+		let requestChannels = [];
 
 		for (let i = 0; i < checkChannels.length; i += 100) {
 			let check = checkChannels.slice(i, i + 100);
-			requestChannels.push(getStreams(check));
-			requestUsers.push(getUsers(check));
-
-		}
-
-		Promise.all(requestChannels).then(results => {
-				let channelIds = [];
-				results.forEach(result => channelIds.concat(result));
-				
-				
-
-				checkChannels.forEach(id => {
-					let channel = trackedChannels[id];
-					let filteredStreams = channelIds.filter(a => a._data.channel._id == id);
-let stream;
-
-            if(filteredStreams.length > 0) stream = filteredStreams[0];
-
-            if (stream) {
-                channel.game = stream.game;
-                channel.status = stream.channel.status;
-                channel.start_date = moment(stream.startDate).unix();
-                channel.end_date = moment().unix();
-            }
-
-					if (channel.live) {
-                if (!stream && moment().unix() - channel.start_date >= TWITCH_API_DELAY) {
-                    channel.ending = true;
-                    channel.end_date = moment().unix();
-		}
-            } else {
-                if (stream) {
-			channel.live = true;
-			channel.ending = false;
-			postLiveNotifications(channel);
-		}
-	    }
+			let test = await getStreams(check)
+			test.forEach(channel => {
+				requestChannels.push(channel);
 			});
-							});
+
+		}
+
+		Promise.all(requestChannels).then(async results => {
+			let channelIds = [];
+			results.forEach(result => result && channelIds.push(result));
+				
+				
+
+			checkChannels.forEach(async id => {
+									let channel = trackedChannels[id];
+									let filteredStreams = channelIds.filter(a => a.id === id);
+
+				let stream;
+									if(filteredStreams.length > 0) stream = filteredStreams[0];
+
+				if (stream) stream = await stream.getStream();
+
+									if (stream) {
+										channel.displayName = stream.userDisplayName;
+										channel.name = stream.userName;
+		    			channel.game = stream.gameName;
+		    			channel.start_date = moment(stream.startDate).unix();
+					channel.end_date = moment().unix();
+	    			}
+
+				if (channel.live) {
+										if (!stream && moment().unix() - channel.start_date >= TWITCH_API_DELAY) {
+						channel.ending = true;
+                				channel.end_date = moment().unix();
+											console.log('NOT LIVE');
+										}
+						} else {
+							if (stream) {
+								channel.live = true;
+													channel.ending = false;
+								postLiveNotifications(channel);
+												} else {
+													channel.live = false;
+							}
+						}
+				db.set(`twitch_channels.${id}`, channel);
+			});
+							}).catch(console.error);
 	}
 
 	let filteredSockets = sockets.filter(socket => socket.topics < MAX_TOPICS);
 	filteredSockets.forEach(socket => bindSocketHandlers(socket));
 
 	setInterval(updateChannels, 60 * 1000);
-	setTimeout(updateChannels, 4 * 1000);
+	setTimeout(updateChannels, 2 * 1000);
 }
