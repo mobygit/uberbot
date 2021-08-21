@@ -176,6 +176,6 @@ db.set(`twitch_channel.${channelId}`, channel);
 	let filteredSockets = sockets.filter(socket => socket.topics < MAX_TOPICS);
 	filteredSockets.forEach(socket => bindSocketHandlers(socket));
 
-	setInterval(updateChannels, 60 * 1000);
-	setTimeout(updateChannels, 2 * 1000);
+	setInterval(updateChannels, 30 * 1000);
+	updateChannels();
 }
