@@ -60,10 +60,13 @@ client
 		`);
 	})
 
-
-client.setProvider(
+if (!process.env.DATABASE_URL) { 
+	client.setProvider(
     sqlite.open({ filename: 'database.db', driver: sqlite3.Database }).then(db => new commando.SQLiteProvider(db))
 ).catch(console.error);
+} else {
+	client.setProvider(new commando.SQLiteProvider(process.env.DATABASE_URL));
+}
 
 app.use(_.get('/', async ctx => {
 	ctx.body = 'Bot is up!'

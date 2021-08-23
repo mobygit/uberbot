@@ -98,9 +98,7 @@ module.exports = class HelpCommand extends Command {
 			);
 
 			if(!prefix) embed.addField('Prefix not set up!', `There appears to be no prefix set, do <@${this.client.user.id}> prefix to set a prefix`)
-
-			if(msg.channel.type !== 'dm') msg.reply('Sent you a DM with information.');
-			return await msg.direct({ embed });
+			return await msg.reply({ embed });
 		} else if(commands.length > 15) {
 			return await msg.reply('Be more specific!  Multiple commands with that name were found.');
 		} else {
