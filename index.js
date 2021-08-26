@@ -2,8 +2,8 @@ const commando = require('discord.js-commando');
 const Discord = require('discord.js');
 const path = require('path');
 
-const sqlite = require('sqlite');
-const sqlite3 = require('sqlite3');
+const { MongoClient } = require('mongodb');
+const { MongoDBProvider } = require('commando-provider-mongo');
 
 const Koa = require('koa');
 const _ = require('koa-route');
@@ -60,19 +60,18 @@ client
 		`);
 	})
 
-if (!process.env.DATABASE_URL) { 
-	client.setProvider(
-    sqlite.open({ filename: 'database.db', driver: sqlite3.Database }).then(db => new commando.SQLiteProvider(db))
-).catch(console.error);
-} else {
-	client.setProvider(new commando.SQLiteProvider(process.env.DATABASE_URL));
-}
+
 
 app.use(_.get('/', async ctx => {
 	ctx.body = 'Bot is up!'
 }));
 
-require('./notifier/twitch')(client);
+client.setProvider(
+	MongoClient.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }).then(client => new MongoDBProvider(client, 'abot'))
+).catch(console.error);
+
+const TwitchNotifier = require('./notifier/twitch');
+TwitchNotifier(client);
 
 client.login(process.env.TOKEN);
 app.listen(process.env.PORT || 5000);

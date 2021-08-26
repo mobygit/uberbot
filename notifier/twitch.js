@@ -1,7 +1,8 @@
 const WebSocket = require('ws');
 const EventEmitter = require('events');
 const moment = require('moment');
-const db = require('quick.db');
+const { Database } = require("quickmongo");
+const db = new Database(process.env.MONGO_URI);
 
 if (!db.get('twitch_channel')) db.set('twitch_channel', {});
 

@@ -1,7 +1,7 @@
 const { Command } = require('discord.js-commando');
 const { getUser } = require('../../util');
 
-const db = require('quick.db');
+const { Database } = require("quickmongo");                                     const db = new Database(process.env.MONGO_URI);
 
 module.exports = class Twitch extends Command {
 	constructor(client) {
